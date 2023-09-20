@@ -1,0 +1,25 @@
+semacam todolist yang lebih kompleks
+
+GRAPHIC
+- studying or working + self development
+- lifestye
+	1.essencial
+		- diet
+		- workout
+		- skincare
+		- social
+		- psychology
+		- financial
+			1.tabungan
+			2.investasi
+	2.fashion
+		- clothes
+		- hobbies
+
+FLOWCASE
+try now => student or employment => buat rutinitas => tampilkan grafik
+
+TECH STACK
+laravel
+reactJS
+tailwindCSS + daisyUI
