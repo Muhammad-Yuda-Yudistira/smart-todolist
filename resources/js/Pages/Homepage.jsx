@@ -1,6 +1,9 @@
+import { Link, Head } from '@inertiajs/react';
+
 export default function Homepage() {
     return (
         <>
+            <Head title="Home" />
             <Navbar />
             <Hero />
             <div className="container w-full my-36 text-center">
@@ -90,23 +93,21 @@ function Modal() {
                     <h3 className="font-bold text-lg mb-5">Choice Your Status!</h3>
                     <ul className="w-[50%]">
                         <li className="mb-3 text-start">
-                            <input type="radio" name="student" id="student" className="radio active:radio-primary mr-2" />
+                            <input type="radio" name="status" value="student" id="student" className="radio active:radio-primary mr-2" />
                             <label htmlFor="student">
                                 Student
                             </label>
                         </li>
                         <li className="mb-3 text-start">
-                            <input type="radio" name="employee" id="employee" className="radio active:radio-primary mr-2" checked />
+                            <input type="radio" name="status" value="employee" id="employee" className="radio active:radio-primary mr-2" checked />
                             <label htmlFor="employee">
                                 Employee
                             </label>
                         </li>
                     </ul>
-                    <div className="modal-action">
-                        <form method="post" action="">
-                            {/* if there is a button in form, it will close the modal */}
-                            <button className="btn btn-outline btn-primary btn-sm normal-case text-xl">Submit</button>
-                        </form>
+                    <div className="modal-action flex justify-center">
+                        {/* if there is a button in form, it will close the modal */}
+                        <Link href="./content/notes" className="btn btn-outline btn-primary btn-sm normal-case text-xl">Submit</Link>
                     </div>
                 </div>
             </dialog>
