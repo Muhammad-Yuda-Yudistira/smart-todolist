@@ -9,6 +9,7 @@ GRAPHIC
 		- skincare
 		- social
 		- psychology
+		- science
 		- financial
 			1.tabungan
 			2.investasi
