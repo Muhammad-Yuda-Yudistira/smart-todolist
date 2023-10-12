@@ -53,20 +53,18 @@ class NotesController extends Controller
     public function store(Request $request, Note $note)
     {
         try {
-            $result = $request->validate([
-                'category_id' => ['required'],
-                'clock' => ['required', 'unique:notes'],
-                'body' => ['required']
-            ]);
-
-            // $note::create([
-            //     'category_id' => $request->data['categoryId'],
-            //     'clock' => $request->data['clock'],
-            //     'days' => json_encode($request->data['days']),
-            //     'body' => $request->data['description'],
+            // $result = $request->validate([
+            //     'category_id' => ['required'],
+            //     'clock' => ['required', 'unique:notes'],
+            //     'body' => ['required']
             // ]);
 
-            $note::create($request->all());
+            $note::create([
+                'category_id' => $request->data['categoryId'],
+                'clock' => $request->data['clock'],
+                'days' => json_encode($request->data['days']),
+                'body' => $request->data['description'],
+            ]);
 
             redirect()->back()->with('message', 'Note has been created!');
         } catch (\Exception $e) {
