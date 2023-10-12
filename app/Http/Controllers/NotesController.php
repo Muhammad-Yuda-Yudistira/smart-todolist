@@ -52,26 +52,54 @@ class NotesController extends Controller
      */
     public function store(Request $request, Note $note)
     {
-        try {
-            $result = $request->validate([
-                'category_id' => ['required'],
-                'clock' => ['required', 'unique:notes'],
-                'body' => ['required']
-            ]);
+        
+        $rules = [
+            'data.categoryId' => 'required|numeric', // Category ID harus ada dan berupa angka
+            'data.clock' => 'required|string', // Clock harus ada dan berupa string
+            'data.days' => 'required|array', // Days harus ada dan berupa array
+            'data.description' => 'required|string', // Description harus ada dan berupa string
+        ];
+    
+        $messages = [
+            'data.categoryId.required' => 'Category ID is required.',
+            'data.categoryId.numeric' => 'Category ID must be a number.',
+            'data.clock.required' => 'Clock is required.',
+            'data.clock.string' => 'Clock must be a string.',
+            'data.days.required' => 'Days is required.',
+            'data.days.array' => 'Days must be an array.',
+            'data.description.required' => 'Description is required.',
+            'data.description.string' => 'Description must be a string.',
+        ];
+    
+        $request->validate($rules, $messages);
 
-            // $note::create([
-            //     'category_id' => $request->data['categoryId'],
-            //     'clock' => $request->data['clock'],
-            //     'days' => json_encode($request->data['days']),
-            //     'body' => $request->data['description'],
-            // ]);
+        Note::create([
+            'category_id' => $request['data']['categoryId'],
+            'clock' => $request['data']['clock'],
+            'days' => json_encode($request['data']['days']),
+            'body' => $request['data']['description'],
+        ]);
+        return redirect()->back()->with('message', 'Note has been created!');
+        // batas debug
+        //     $request->validate([
+        //         'category_id' => 'required',
+        //         'clock' => 'required', 'unique:notes',
+        //         'body' => 'required'
+        //     ]);
 
-            $note::create($request->all());
+        //     // $note::create([
+        //     //     'category_id' => $request->data['categoryId'],
+        //     //     'clock' => $request->data['clock'],
+        //     //     'days' => json_encode($request->data['days']),
+        //     //     'body' => $request->data['description'],
+        //     // ]);
 
-            redirect()->back()->with('message', 'Note has been created!');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Failed to create note: ' . $e->getMessage());
-        }
+        //     $note::create($request->all());
+
+        //   return  redirect()->back()->with('message', 'Note has been created!');
+        // } catch (\Exception $e) {
+        //     return redirect()->back()->with('error', 'Failed to create note: ' . $e->getMessage());
+        // }
     }
 
     /**
