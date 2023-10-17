@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Note::factory(12)->create();
+        Note::factory(30)->create();
 
         // 'diet', 'workout', 'skincare', 'social', 'psychology', 'science', 'financial'
         category::create([
@@ -47,7 +47,7 @@ class DatabaseSeeder extends Seeder
             'slug' => 'financial'
         ]);
 
-        // \App\Models\User::factory(10)->create();
+        \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',

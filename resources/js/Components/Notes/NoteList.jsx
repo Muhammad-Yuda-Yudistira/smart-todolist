@@ -23,7 +23,7 @@ export default function NoteList({ data }) {
                                     return (
                                         <tr key={index} className="bg-base-200">
                                             <th>{index + 1}</th>
-                                            <td>{d.note.time}</td>
+                                            <td>{d.note.clock}</td>
                                             <td>{stringDays}</td>
                                             <td>{d.note.category}</td>
                                             <td>{d.note.body}</td>

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('notes', function (Blueprint $table) {
             $table->id();
+            $table->foreignId("user_id")->nullable();
             $table->json("days");
             $table->time("clock")->unique();
             $table->text("body");

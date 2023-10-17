@@ -22,7 +22,8 @@ class NoteFactory extends Factory
             'days' => json_encode($days),
             'clock' => fake()->time(),
             'body' => fake()->paragraph(),
-            'category_id' => mt_rand(1, 7)
+            'category_id' => mt_rand(1, 7),
+            'user_id' => mt_rand(1, 10)
         ];
     }
 }

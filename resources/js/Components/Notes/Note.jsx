@@ -7,7 +7,7 @@ export default function Note(props) {
     const [days, setDays] = useState([]);
     const [clock, setClock] = useState("");
 
-    const { flash } = usePage().props;
+    const { flash, errors } = usePage().props;
 
     function handleChange(event) {
         const { name, value } = event.target;
@@ -28,30 +28,28 @@ export default function Note(props) {
     }
 
     function handleCreate() {
-        const data = {
+        router.post(route("notes.store"), {
             categoryId: categoryId,
             days: days,
             clock: clock,
             description: description,
-        };
+        });
 
-        router.post(route("notes.store"), { data: data });
+        setClock("");
+        setDescription("");
 
-        // setDescription("");
-        // setTime("");
+        const checkboxes = document.querySelectorAll(".checkbox");
+        const select = document.querySelector(".select");
 
-        // const checkboxes = document.querySelectorAll(".checkbox");
-        // const select = document.querySelector(".select");
+        const options = select.options;
+        for (let i = 0; i < options.length; i++) {
+            options[i].selected = false;
+        }
+        options[0].selected = true;
 
-        // const options = select.options;
-        // for (let i = 0; i < options.length; i++) {
-        //     options[i].selected = false;
-        // }
-        // options[0].selected = true;
-
-        // checkboxes.forEach((checkbox) => {
-        //     checkbox.checked = false;
-        // });
+        checkboxes.forEach((checkbox) => {
+            checkbox.checked = false;
+        });
     }
 
     useEffect(() => {
@@ -91,7 +89,13 @@ export default function Note(props) {
                         })}
                     </select>
                     <label className="label">
-                        <span className="label-text-alt"></span>
+                        {errors.categoryId ? (
+                            <span className="label-text-alt text-red-500">
+                                {errors.categoryId}
+                            </span>
+                        ) : (
+                            <span className="label-text-alt"></span>
+                        )}
                         <span className="label-text-alt">Category</span>
                     </label>
                 </div>
@@ -203,7 +207,13 @@ export default function Note(props) {
                         </li>
                     </ul>
                     <label className="label">
-                        <span className="label-text-alt"></span>
+                        {errors.days ? (
+                            <span className="label-text-alt text-red-500">
+                                {errors.days}
+                            </span>
+                        ) : (
+                            <span className="label-text-alt"></span>
+                        )}
                         <span className="label-text-alt">Days</span>
                     </label>
                 </div>
@@ -222,7 +232,15 @@ export default function Note(props) {
                         value={clock}
                     />
                     <label className="label">
-                        <span className="label-text-alt"></span>
+                        {errors.clock ? (
+                            <span className="label-text-alt text-red-500">
+                                {errors.clock}
+                            </span>
+                        ) : (
+                            <>
+                                <span className="label-text-alt"></span>
+                            </>
+                        )}
                         <span className="label-text-alt">Clock</span>
                     </label>
                 </div>
@@ -258,6 +276,13 @@ export default function Note(props) {
                                 value={description}
                                 name="description"
                             ></textarea>
+                            <label className="label">
+                                {errors.description && (
+                                    <span className="label-text-alt text-red-500">
+                                        {errors.description}
+                                    </span>
+                                )}
+                            </label>
                         </div>
                     </div>
                     <button

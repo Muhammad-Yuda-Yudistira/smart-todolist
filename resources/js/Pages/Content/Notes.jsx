@@ -5,7 +5,6 @@ import Navbar from "@/Layouts/Navbar";
 import { Head } from "@inertiajs/react";
 
 export default function Notes(props) {
-    console.log(props);
     return (
         <>
             <Head title="Note" />

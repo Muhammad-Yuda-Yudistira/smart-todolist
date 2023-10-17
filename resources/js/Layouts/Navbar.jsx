@@ -1,6 +1,6 @@
 import { Link } from "@inertiajs/react";
 
-export default function Navbar({ user = "anonymous" }) {
+export default function Navbar() {
     return (
         <div className="navbar bg-primary text-primary-content lg:px-20">
             <div className="navbar-start">
@@ -15,17 +15,20 @@ export default function Navbar({ user = "anonymous" }) {
                 <ul className="menu menu-horizontal px-1"></ul>
             </div>
             <div className="navbar-end">
-                {!user ? (
-                    <Link
-                        className="btn btn-ghost normal-case text-xl"
-                        href={route("notes.create")}
-                        as="button"
-                    >
-                        Try Now
-                    </Link>
-                ) : (
-                    <a className="btn btn-ghost normal-case text-xl"></a>
-                )}
+                <Link
+                    className="btn btn-ghost normal-case text-xl"
+                    href={route("login")}
+                    as="button"
+                >
+                    Login
+                </Link>
+                <Link
+                    className="btn btn-ghost normal-case text-xl"
+                    href={route("register")}
+                    as="button"
+                >
+                    Signup
+                </Link>
             </div>
         </div>
     );

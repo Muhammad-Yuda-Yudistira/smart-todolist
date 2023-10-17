@@ -6,6 +6,8 @@ use Illuminate\Foundation\Application;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NotesController;
 use App\Http\Controllers\ProfileController;
+use App\Models\category;
+use App\Models\Note;
 use Illuminate\Http\Request;
 
 /*
@@ -36,7 +38,25 @@ Route::get('/content/notes', [NotesController::class, 'index'])->name('notes.ind
 // });
 
 Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
+    $categories = category::all();
+    $notes = Note::where('user_id', auth()->user()->id)->orderBy('clock', 'asc')->get();
+
+    $data = $notes->map(function ($note) {
+        $data = [
+            'note' => [
+                'id' => $note->id,
+                'days' => $note->days,
+                'clock' => $note->clock,
+                'body' => $note->body,
+            ], 'category' => [
+                'id' => $note->category->id,
+                'name' => $note->category->name,
+            ]
+        ];
+        return $data;
+    });
+
+    return Inertia::render('Dashboard', ["data" => $data, 'categories' => $categories]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
