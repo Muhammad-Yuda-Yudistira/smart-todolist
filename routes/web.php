@@ -39,14 +39,15 @@ Route::get('/content/notes', [NotesController::class, 'index'])->name('notes.ind
 
 Route::get('/dashboard', function () {
     $categories = category::all();
-    $notes = Note::where('user_id', auth()->user()->id)->orderBy('clock', 'asc')->get();
+    $notes = Note::where('user_id', auth()->user()->id)->orderBy('start_time', 'asc')->get();
 
     $data = $notes->map(function ($note) {
         $data = [
             'note' => [
                 'id' => $note->id,
                 'days' => $note->days,
-                'clock' => $note->clock,
+                'start_time' => $note->start_time,
+                'end_time' => $note->end_time,
                 'body' => $note->body,
             ], 'category' => [
                 'id' => $note->category->id,

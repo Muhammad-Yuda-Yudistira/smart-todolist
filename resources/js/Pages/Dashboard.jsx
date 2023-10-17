@@ -3,8 +3,7 @@ import { Head } from "@inertiajs/react";
 import Note from "@/Components/Notes/Note";
 import NoteList from "@/Components/Notes/NoteList";
 
-export default function Dashboard(props) {
-    const auth = props.auth;
+export default function Dashboard({ auth, data, categories }) {
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -21,13 +20,14 @@ export default function Dashboard(props) {
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="px-12 py-12">
                             <Note
-                                data={props.data}
-                                categories={props.categories}
+                                data={data}
+                                categories={categories}
+                                user={auth.user.id}
                             />
                             <h1 className="text-center mb-12 text-4xl">
                                 Your Routines
                             </h1>
-                            <NoteList data={props.data} />
+                            <NoteList data={data} />
                         </div>
                     </div>
                 </div>

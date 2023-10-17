@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId("user_id")->nullable();
             $table->json("days");
-            $table->time("clock")->unique();
+            $table->time("start_time")->unique();
+            $table->time("end_time")->unique();
             $table->text("body");
             $table->foreignId('category_id');
             $table->timestamps();

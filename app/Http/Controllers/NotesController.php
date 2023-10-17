@@ -26,14 +26,15 @@ class NotesController extends Controller
     public function create(Note $note)
     {
         $categories = category::all();
-        $notes = $note::orderBy('clock', 'asc')->get();
+        $notes = $note::where('user_id', null)->orderBy('start_time', 'asc')->get();
 
         $data = $notes->map(function ($note) {
             $data = [
                 'note' => [
                     'id' => $note->id,
                     'days' => $note->days,
-                    'clock' => $note->clock,
+                    'start_time' => $note->start_time,
+                    'end_time' => $note->end_time,
                     'body' => $note->body,
                 ], 'category' => [
                     'id' => $note->category->id,
@@ -53,7 +54,8 @@ class NotesController extends Controller
     {
         $rules = [
             'categoryId' => 'required|numeric', // Category ID harus ada dan berupa angka
-            'clock' => 'required|string', // Clock harus ada dan berupa string
+            'startTime' => 'required|string', // Clock harus ada dan berupa string
+            'endTime' => 'required|string', // Clock harus ada dan berupa string
             'days' => 'required|array', // Days harus ada dan berupa array
             'description' => 'required|string', // Description harus ada dan berupa string
         ];
@@ -61,8 +63,10 @@ class NotesController extends Controller
         $messages = [
             'categoryId.required' => 'Category ID is required.',
             'categoryId.numeric' => 'Category ID must be a number.',
-            'clock.required' => 'Clock is required.',
-            'clock.string' => 'Clock must be a string.',
+            'startTime.required' => 'Start time is required.',
+            'startTime.string' => 'Start time must be a string.',
+            'endTime.string' => 'End time must be a string.',
+            'endTime.string' => 'End time must be a string.',
             'days.required' => 'Days is required.',
             'days.array' => 'Days must be an array.',
             'description.required' => 'Description is required.',
@@ -73,7 +77,9 @@ class NotesController extends Controller
 
         Note::create([
             'category_id' => $request['categoryId'],
-            'clock' => $request['clock'],
+            'user_id' => $request['userId'],
+            'start_time' => $request['startTime'],
+            'end_time' => $request['endTime'],
             'days' => json_encode($request['days']),
             'body' => $request['description'],
         ]);

@@ -20,7 +20,8 @@ class NoteFactory extends Factory
 
         return [
             'days' => json_encode($days),
-            'clock' => fake()->time(),
+            'start_time' => fake()->time(),
+            'end_time' => fake()->time(),
             'body' => fake()->paragraph(),
             'category_id' => mt_rand(1, 7),
             'user_id' => mt_rand(1, 10)

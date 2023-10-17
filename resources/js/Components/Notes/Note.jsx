@@ -2,10 +2,12 @@ import { router, usePage } from "@inertiajs/react";
 import { useEffect, useState } from "react";
 
 export default function Note(props) {
+    console.log(props.user);
     const [description, setDescription] = useState("");
     const [categoryId, setCategoryId] = useState("");
     const [days, setDays] = useState([]);
-    const [clock, setClock] = useState("");
+    const [startTime, setStartTime] = useState("");
+    const [endTime, setEndTime] = useState("");
 
     const { flash, errors } = usePage().props;
 
@@ -18,8 +20,11 @@ export default function Note(props) {
             case "days":
                 setDays((prevDays) => [...prevDays, value]);
                 break;
-            case "clock":
-                setClock(value);
+            case "start_time":
+                setStartTime(value);
+                break;
+            case "end_time":
+                setEndTime(value);
                 break;
             case "description":
                 setDescription(value);
@@ -30,12 +35,15 @@ export default function Note(props) {
     function handleCreate() {
         router.post(route("notes.store"), {
             categoryId: categoryId,
+            userId: props.user,
             days: days,
-            clock: clock,
+            startTime: startTime,
+            endTime: endTime,
             description: description,
         });
 
-        setClock("");
+        setStartTime("");
+        setEndTime("");
         setDescription("");
 
         const checkboxes = document.querySelectorAll(".checkbox");
@@ -227,21 +235,47 @@ export default function Note(props) {
                     <input
                         type="time"
                         className="input input-bordered input-primary w-full max-w-xs"
-                        name="clock"
+                        name="start_time"
                         onChange={handleChange}
-                        value={clock}
+                        value={startTime}
                     />
                     <label className="label">
-                        {errors.clock ? (
+                        {errors.startTime ? (
                             <span className="label-text-alt text-red-500">
-                                {errors.clock}
+                                {errors.startTime}
                             </span>
                         ) : (
                             <>
                                 <span className="label-text-alt"></span>
                             </>
                         )}
-                        <span className="label-text-alt">Clock</span>
+                        <span className="label-text-alt">Start Time</span>
+                    </label>
+                </div>
+                <div className="form-control w-full max-w-xs">
+                    <label className="label">
+                        <span className="label-text">
+                            When do your activity will be start
+                        </span>
+                    </label>
+                    <input
+                        type="time"
+                        className="input input-bordered input-primary w-full max-w-xs"
+                        name="end_time"
+                        onChange={handleChange}
+                        value={endTime}
+                    />
+                    <label className="label">
+                        {errors.endTime ? (
+                            <span className="label-text-alt text-red-500">
+                                {errors.endTime}
+                            </span>
+                        ) : (
+                            <>
+                                <span className="label-text-alt"></span>
+                            </>
+                        )}
+                        <span className="label-text-alt">End Time</span>
                     </label>
                 </div>
             </div>
